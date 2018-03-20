@@ -1,4 +1,6 @@
 require 'customer'
+require 'movie'
+require 'rental'
 
 shared_examples "output" do
   it 'shows total correctly' do
@@ -22,6 +24,40 @@ describe Customer do
       let(:total) { 0 }
 
       it_behaves_like "output"
+    end
+
+    context 'testing rental types separately' do
+      let(:movie) { Movie.new("Peter Pan", price_code) }
+      let(:rental) { Rental.new(movie, 7) }
+
+      before do
+        customer.add_rental(rental)
+      end
+
+      context 'REGULAR' do
+        let(:price_code) { Movie::REGULAR }
+        let(:points) { 1 }
+        let(:total) { 9.5 }
+
+        it_behaves_like "output"
+      end
+
+      context 'NEW_RELEASE' do
+        let(:price_code) { Movie::NEW_RELEASE }
+        let(:points) { 2 }
+        let(:total) { 21 }
+
+        it_behaves_like "output"
+      end
+
+      context 'CHILDRENS' do
+        let(:price_code) { Movie::CHILDRENS }
+        let(:points) { 1 }
+        let(:total) { 7.5 }
+
+        it_behaves_like "output"
+      end
+
     end
   end
 end
