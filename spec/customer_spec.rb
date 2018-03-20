@@ -15,7 +15,7 @@ shared_examples "summary output" do
 end
 
 describe Customer do
-  let(:customer) { Customer.new("Peter")}
+  let(:customer) { Customer.new("Mary")}
   let(:subject) { customer.statement }
 
   describe '#statement' do
@@ -56,6 +56,30 @@ describe Customer do
         let(:total) { 7.5 }
 
         it_behaves_like "summary output"
+      end
+    end
+
+    context 'test multiple rentals' do
+      let(:regular_movie) { Movie.new("Ambush", 0) }
+      let(:new_release) { Movie.new("Hunger Games", 1) }
+      let(:childrens) { Movie.new("Peter Pan", 2) }
+      let(:points) { 4 }
+      let(:total) { 38 }
+
+      before do
+        customer.add_rental(Rental.new(regular_movie, 7))
+        customer.add_rental(Rental.new(new_release, 7))
+        customer.add_rental(Rental.new(childrens, 7))
+      end
+
+      it_behaves_like "summary output"
+
+      context 'listed output' do
+        it 'outputs cost for each rental' do
+          expect(subject).to match (/Ambush\t9.5/)
+          expect(subject).to match (/Hunger Games\t21/)
+          expect(subject).to match (/Peter Pan\t7.5/)
+        end
       end
     end
 
