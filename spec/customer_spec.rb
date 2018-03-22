@@ -83,5 +83,37 @@ describe Customer do
       end
     end
 
+    context 'edge cases' do
+      let(:movie) { Movie.new("No Name", price_code) }
+      let(:rental) { Rental.new(movie, days) }
+      let(:points) { 1 }
+
+      before { customer.add_rental(rental) }
+
+      context 'REGULAR release rented for 2 day' do
+        let(:days) { 2 }
+        let(:price_code) { 0 }
+        let(:total) { 2 }
+
+        it_behaves_like "summary output"
+      end
+
+      context 'NEW_RELEASE rented for 1 day' do
+        let(:days) { 1 }
+        let(:price_code) { 1 }
+        let(:total) { 3 }
+
+        it_behaves_like "summary output"
+      end
+
+      context 'CHILDRENS release rented for 3 days' do
+        let(:days) { 3 }
+        let(:price_code) { 2 }
+        let(:total) { 1.5 }
+
+        it_behaves_like "summary output"
+      end
+    end
+
   end
 end
