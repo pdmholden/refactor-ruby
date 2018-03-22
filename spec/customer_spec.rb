@@ -26,7 +26,7 @@ describe Customer do
       it_behaves_like 'summary output'
     end
 
-    context 'testing rental types separately' do
+    context 'sanity for each rental type' do
       let(:movie) { Movie.new("Peter Pan", price_code) }
       let(:rental) { Rental.new(movie, 7) }
 
@@ -59,7 +59,7 @@ describe Customer do
       end
     end
 
-    context 'test multiple rentals' do
+    context 'multiple rentals' do
       let(:regular_movie) { Movie.new("Ambush", 0) }
       let(:new_release) { Movie.new("Hunger Games", 1) }
       let(:childrens) { Movie.new("Peter Pan", 2) }
