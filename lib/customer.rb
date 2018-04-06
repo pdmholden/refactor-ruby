@@ -34,18 +34,4 @@ class Customer
     result
   end
 
-  def amount_for(element)
-    amount = 0
-    case element.movie.price_code
-    when Movie::REGULAR
-      amount += 2
-      amount += (element.days_rented - 2) * 1.5 if element.days_rented > 2
-    when Movie::NEW_RELEASE
-      amount += element.days_rented * 3
-    when Movie::CHILDRENS
-      amount += 1.5
-      amount += (element.days_rented - 3) * 1.5 if element.days_rented > 3
-    end
-    amount
-  end
 end
