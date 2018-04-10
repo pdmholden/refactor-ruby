@@ -16,11 +16,11 @@ class Customer
     frequent_renter_points = 0
     result = "Rental Record for #{@name}\n"
     @rentals.each do |rental|
-      frequent_renter_points += rental.points
-
       # show figures for this rental
       result += "\t" + rental.movie.title + "\t" + rental.cost.to_s + "\n"
+
       total_amount += rental.cost
+      frequent_renter_points += rental.points
     end
     # add footer lines
     result += "Amount owed is #{total_amount}\n"
