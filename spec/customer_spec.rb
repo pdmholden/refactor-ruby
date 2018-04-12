@@ -14,11 +14,34 @@ shared_examples 'summary output' do
   end
 end
 
+shared_examples 'summary html output' do
+  it 'shows total correctly' do
+    result_match = "<p>Amount owed <em>#{total}"
+    expect(subject).to match(result_match)
+  end
+
+  it 'shows points correctly' do
+    result_match = "<p>You earned <em>#{points}"
+    expect(subject).to match(result_match)
+  end
+end
+
 describe Customer do
   let(:customer) { Customer.new("Mary")}
-  let(:subject) { customer.statement }
+
+  describe '#html_statement' do
+    let(:subject) { customer.html_statement }
+
+    context 'when there are no rentals' do
+      let(:points) { 0 }
+      let(:total) { 0 }
+
+      it_behaves_like 'summary html output'
+    end
+  end
 
   describe '#statement' do
+    let(:subject) { customer.statement }
     context 'when there are no rentals' do
       let(:points) { 0 }
       let(:total) { 0 }
